@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study Planner</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-white border-end" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom bg-light text-primary fw-bold">
+                <i class="fas fa-graduation-cap me-2"></i>StudyPlanner
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action list-group-item-light p-3 active" onclick="showSection('dashboard')">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                </a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-light p-3" onclick="showSection('schedule')">
+                    <i class="fas fa-calendar-alt me-2"></i>Schedule
+                </a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-light p-3" onclick="showSection('tasks')">
+                    <i class="fas fa-tasks me-2"></i>Tasks
+                </a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-light p-3" onclick="showSection('subjects')">
+                    <i class="fas fa-book me-2"></i>Subjects
+                </a>
+                <div class="mt-4 px-3 text-muted small text-uppercase fw-bold">Account</div>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-light p-3" onclick="showSection('profile')">
+                    <i class="fas fa-user-circle me-2"></i>Profile
+                </a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-light p-3" onclick="showSection('settings')">
+                    <i class="fas fa-cog me-2"></i>Settings
+                </a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-light p-3 text-danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+                    
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                    <img src="https://ui-avatars.com/api/?name=Student&background=4361ee&color=fff" class="rounded-circle" width="30" height="30" alt="User" id="navUserAvatar">
+                                    <span id="navUserName">Student</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#" onclick="showSection('profile')">Profile</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="showSection('settings')">Settings</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#" onclick="logout()">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid px-4 py-4">
+                
+                <!-- Alert Container -->
+                <div id="main-alert-container"></div>
+
+                <!-- Dashboard Section -->
+                <div id="dashboard-section" class="content-section">
+                    <h2 class="mb-4">Dashboard</h2>
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white h-100 border-0">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="card-title mb-0 text-white-50">Study Hours</h6>
+                                            <h2 class="my-2 text-white">4.5h</h2>
+                                            <small class="text-white-50">Today</small>
+                                        </div>
+                                        <div class="icon-box bg-white bg-opacity-25 rounded-circle p-3">
+                                            <i class="fas fa-clock fa-lg text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white h-100 border-0">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="card-title mb-0 text-white-50">Tasks Done</h6>
+                                            <h2 class="my-2 text-white">12</h2>
+                                            <small class="text-white-50">This Week</small>
+                                        </div>
+                                        <div class="icon-box bg-white bg-opacity-25 rounded-circle p-3">
+                                            <i class="fas fa-check-circle fa-lg text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white h-100 border-0">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="card-title mb-0 text-white-50">Pending</h6>
+                                            <h2 class="my-2 text-white">5</h2>
+                                            <small class="text-white-50">High Priority</small>
+                                        </div>
+                                        <div class="icon-box bg-white bg-opacity-25 rounded-circle p-3">
+                                            <i class="fas fa-exclamation-circle fa-lg text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white h-100 border-0">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="card-title mb-0 text-white-50">Next Exam</h6>
+                                            <h2 class="my-2 text-white">3 Days</h2>
+                                            <small class="text-white-50">Mathematics</small>
+                                        </div>
+                                        <div class="icon-box bg-white bg-opacity-25 rounded-circle p-3">
+                                            <i class="fas fa-calendar-day fa-lg text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-8">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header bg-white border-0 py-3">
+                                    <h5 class="mb-0 fw-bold">Study Progress</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="studyChart" height="150"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0 fw-bold">Today's Focus</h5>
+                                    <button class="btn btn-sm btn-outline-primary rounded-circle"><i class="fas fa-plus"></i></button>
+                                </div>
+                                <div class="card-body p-0">
+                                    <ul class="list-group list-group-flush" id="todays-focus-list">
+                                        <!-- Populated by JS -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Section -->
+                <div id="tasks-section" class="content-section d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Tasks Manager</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+                            <i class="fas fa-plus me-2"></i>Add New Task
+                        </button>
+                    </div>
+                    
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>Task Name</th>
+                                            <th>Subject</th>
+                                            <th>Due Date</th>
+                                            <th>Priority</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tasks-table-body">
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schedule Section (Placeholder) -->
+                <div id="schedule-section" class="content-section d-none">
+                    <h2 class="mb-4">Weekly Schedule</h2>
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body text-center py-5">
+                            <i class="fas fa-calendar-alt fa-4x text-muted mb-3"></i>
+                            <h4 class="text-muted">Schedule View Coming Soon</h4>
+                            <p class="text-muted">Manage your classes and study sessions here.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subjects Section (Placeholder) -->
+                <div id="subjects-section" class="content-section d-none">
+                    <h2 class="mb-4">My Subjects</h2>
+                    <div class="row g-4" id="subjects-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Subject Details Section -->
+                <div id="subject-details-section" class="content-section d-none">
+                    <div class="d-flex align-items-center mb-4">
+                        <button class="btn btn-outline-secondary me-3" onclick="showSection('subjects')">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <h2 class="mb-0" id="subject-details-title">Subject Profile</h2>
+                    </div>
+                    <div class="row" id="subject-details-content">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Profile Section -->
+                <div id="profile-section" class="content-section d-none">
+                    <h2 class="mb-4">My Profile</h2>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card text-center h-100">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <img src="https://ui-avatars.com/api/?name=Student&background=4361ee&color=fff&size=128" class="rounded-circle shadow-sm" id="profileAvatar" alt="Profile">
+                                    </div>
+                                    <h4 class="card-title text-dark mb-1" id="profileNameDisplay">Student Name</h4>
+                                    <p class="text-muted mb-3" id="profileEmailDisplay">student@example.com</p>
+                                    <button class="btn btn-outline-primary btn-sm">Change Avatar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0 text-dark">Edit Profile</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="profileForm" onsubmit="updateProfile(event)">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Full Name</label>
+                                                <input type="text" class="form-control" id="profileName" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="profileEmail" readonly disabled>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Bio</label>
+                                            <textarea class="form-control" id="profileBio" rows="3" placeholder="Tell us about yourself..."></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">School/University</label>
+                                            <input type="text" class="form-control" id="profileSchool" placeholder="Enter your school name">
+                                        </div>
+                                        <div class="text-end">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settings-section" class="content-section d-none">
+                    <h2 class="mb-4">Settings</h2>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0 text-dark">Preferences</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h6 class="mb-0 text-dark">Email Notifications</h6>
+                                            <small class="text-muted">Receive emails about upcoming tasks</small>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="settingEmailNotif" checked>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h6 class="mb-0 text-dark">Dark Mode</h6>
+                                            <small class="text-muted">Switch between light and dark themes</small>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="settingDarkMode">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0 text-dark">Security</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form onsubmit="changePassword(event)">
+                                        <div class="mb-3">
+                                            <label class="form-label">Current Password</label>
+                                            <input type="password" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">New Password</label>
+                                            <input type="password" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Confirm New Password</label>
+                                            <input type="password" class="form-control" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-warning text-white">Update Password</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTaskForm">
+                        <div class="mb-3">
+                            <label class="form-label">Task Title</label>
+                            <input type="text" class="form-control" id="taskTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subject</label>
+                            <select class="form-select" id="taskSubject">
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="Physics">Physics</option>
+                                <option value="History">History</option>
+                                <option value="Computer Science">Computer Science</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Due Date</label>
+                            <input type="date" class="form-control" id="taskDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Priority</label>
+                            <select class="form-select" id="taskPriority">
+                                <option value="High">High</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addTask()">Save Task</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
